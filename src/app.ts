@@ -11,8 +11,8 @@ const MONGO_URI = "8080";
 const app: Express = express();
 
 // connectDB(MONGO_URI);
-configRoutes(app);
 configMiddleware(app);
+configRoutes(app);
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
     const { status = 500, message = "Something went wrong." } = err;
