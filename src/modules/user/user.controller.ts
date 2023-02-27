@@ -1,12 +1,17 @@
 import { Express, Router, Request, Response, NextFunction } from "express";
 import User from "./user.model";
-async function pingPong(req: Request, res: Response, next: NextFunction) {
-    const body: { name: string } = req.body;
+import { ICreateUserRequestSchema } from "./user.schema";
+import services from "./user.service";
 
-    const newUser = await User.findById({});
-    if (!newUser) return res.sendStatus(404);
-
-    return res.sendStatus(200);
+async function createUser(
+    req: Request<{}, {}, ICreateUserRequestSchema>,
+    res: Response,
+    next: NextFunction
+) {
+    const newUser = await services.createUser({
+        ...req.body,
+    });
+    return res.status(200).json(newUser);
 }
 
-export default { pingPong };
+export default { createUser };
